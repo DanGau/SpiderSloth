@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 public class Sloth {
-	
+	//these are coordinates
 	double x, y;
 	double dx, dy;
 	
