@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 public class Sloth {
-	
+	//what is even going on here?
 	double x, y;
 	double dx, dy;
 	
