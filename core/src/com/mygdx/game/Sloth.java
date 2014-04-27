@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 public class Sloth {
-	//what is even going on here?
+	
 	double x, y;
 	double dx, dy;
 	
@@ -12,6 +12,7 @@ public class Sloth {
 	double rotPos;
 	double attatchX, attachY;
 	
+	Rope ourRope;
 	
 	
 	public Sloth (double posX, double posY) {
@@ -20,10 +21,19 @@ public class Sloth {
 		swinging = false;
 	}
 	
+	public void throwRope()	{
+		
+	}
+	
 	public void move(double dt){
 		if (swinging) {
 			dx = rotSpeed * ropeLength * Math.cos(rotPos);
 			dy = rotSpeed * ropeLength * Math.sin(rotPos);
+		} else {
+			//Freefall physics
+			dy = dy - 9.8*dt;
 		}
+		x = x + dx*dt;
+		y = y + dy*dt;
 	}
 }
