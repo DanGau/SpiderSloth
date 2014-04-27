@@ -24,7 +24,7 @@ public class Sloth {
 	public void throwRope()	{
 		
 	}
-	
+	//moves shit
 	public void move(double dt){
 		if (swinging) {
 			dx = rotSpeed * ropeLength * Math.cos(rotPos);
