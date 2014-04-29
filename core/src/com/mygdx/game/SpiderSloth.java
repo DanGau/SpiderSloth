@@ -15,6 +15,11 @@ public class SpiderSloth extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		
+		System.out.println(Gdx.graphics.getWidth());
+		System.out.println(Gdx.graphics.getHeight());
+		
+		
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		
@@ -39,10 +44,12 @@ public class SpiderSloth extends ApplicationAdapter {
 		if(Gdx.input.isTouched())
 		{
 			as.pause();
+			bg.pause();
 		}
 		else
 		{
 			as.resume();
+			bg.resume();
 		}
 		
 		bg.render();

@@ -107,8 +107,8 @@ public class AnimatedSloth implements ApplicationListener{
         	currentSprite = new Sprite(currentFrame);
         	
         	horizPos += 10;
-            if(horizPos > 1500)
-            	horizPos = 50;
+            if(horizPos > Gdx.graphics.getWidth() * .95)
+            	horizPos = 10;
             
             if(rot == 45 || rot == -45)
             	rotFact *= -1;

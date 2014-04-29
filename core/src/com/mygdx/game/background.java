@@ -29,6 +29,9 @@ public class background implements ApplicationListener {
         back1 = new Sprite(img);
         back2 = new Sprite(img);
         
+        resize(0,0);
+        
+        
         back1.setPosition(0, 0);
         back2.setPosition(back2.getWidth(), 0);
         
@@ -44,15 +47,25 @@ public class background implements ApplicationListener {
         
         spriteBatch.begin();
         back1.draw(spriteBatch);             // #17
-        //back2.draw(spriteBatch);
+        back2.draw(spriteBatch);
         spriteBatch.end();
     }
 
-    public void resize (int width, int height) { }
+    public void resize (int width, int height) 
+    {
+    	back1.setScale(back1.getHeight() / Gdx.graphics.getHeight());
+    	back2.setScale(back2.getHeight() / Gdx.graphics.getHeight());
+    }
 
-    public void pause () { }
+    public void pause () 
+    {
+    	paused = true;
+    }
 
-    public void resume () { }
+    public void resume () 
+    {
+    	paused = false;
+    }
 
     public void dispose () { }
     
@@ -62,12 +75,14 @@ public class background implements ApplicationListener {
 		
 		if(!paused)
         {	
-        	int temp = (int)(back1.getX()) - (int)stateTime; // - shiftAmt * 1.0 / stateTime);
+			if(back1.getX() <= back1.getWidth() * -1)
+        		back1.setPosition(back2.getX() + back2.getWidth(), 0);
         	
-        	if(temp > 1000)
-        		temp = 0;
+        	if(back2.getX() <= back2.getWidth() * -1)
+        		back2.setPosition(back1.getX() + back1.getWidth(), 0);
         	
-			back1.setPosition(temp, 0);
+			back1.setPosition(back1.getX() - stateTime, 0);
+			back2.setPosition(back2.getX() - stateTime, 0);
         }
 	}
 }
