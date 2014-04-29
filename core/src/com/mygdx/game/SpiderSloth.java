@@ -12,6 +12,7 @@ public class SpiderSloth extends ApplicationAdapter {
 	AnimatedSloth as;
 	AnimatedSloth as2;
 	background bg;
+	drawingRope dr;
 	
 	@Override
 	public void create () {
@@ -28,11 +29,14 @@ public class SpiderSloth extends ApplicationAdapter {
 		
 		as = new AnimatedSloth();
 		as.create();
-		as.setPos(50, 500);
+		as.setPos(50, 0);
 		
 		as2 = new AnimatedSloth();
 		as2.create();
 		as2.setPos(50, 0);
+		
+		dr = new drawingRope();
+		dr.create();
 		
 	}
 
@@ -45,15 +49,18 @@ public class SpiderSloth extends ApplicationAdapter {
 		{
 			as.pause();
 			bg.pause();
+			dr.pause();
 		}
 		else
 		{
 			as.resume();
 			bg.resume();
+			dr.resume();
 		}
 		
 		bg.render();
 		as.render();
-		as2.render();
+		//as2.render();
+		dr.render();
 	}
 }
