@@ -32,7 +32,7 @@ public class AnimatedSloth implements ApplicationListener{
 
     @Override
     public void create() {
-        walkSheet = new Texture(Gdx.files.internal("sprite-sheet.png")); // #9
+        walkSheet = new Texture(("sprite-sheet.png")); // #9
         TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);              // #10
         walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
