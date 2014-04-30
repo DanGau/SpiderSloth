@@ -22,7 +22,7 @@ public class SpiderSloth extends ApplicationAdapter {
 		
 		
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img = new Texture(Gdx.files.internal("badlogic.jpg"));
 		
 		bg = new background();
 		bg.create();
