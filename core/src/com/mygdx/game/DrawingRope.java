@@ -26,7 +26,7 @@ public class DrawingRope implements ApplicationListener {
 
     public void create () {
     	
-    	img = new Texture(Gdx.files.internal("rope_segment.png"));
+    	img = new Texture(Gdx.files.internal("rope_segment2.png"));
     	
         spriteBatch = new SpriteBatch();
         
@@ -43,7 +43,7 @@ public class DrawingRope implements ApplicationListener {
         	rope[i] = new Sprite(img);
         	rope[i].setScale(.25f);
         	rope[i].setPosition(x, y);
-        	rope[i].setRotation(60);
+        	rope[i].setRotation(75);
         	y += rope[i].getHeight() * .2;
         	x += rope[i].getHeight() * .0;
         }
@@ -86,14 +86,16 @@ public class DrawingRope implements ApplicationListener {
     
     private void update()
 	{
-		stateTime += Gdx.graphics.getDeltaTime();           // #15
 		
 		if(!paused)
         {	
+			int yOffset = 0;
 			for(int i = ropeLen - 1; i >= 0; i--)
 			{
-				rope[i].setPosition(rope[i].getX() + (ropeLen - i)*rotFact , rope[i].getY());
+				
+				rope[i].setPosition(rope[i].getX() + (ropeLen - i)*rotFact , rope[i].getY() + (ropeLen - i)*yOffset);
 				rope[i].setRotation(rotCount * rotDir);
+				yOffset++;
 			}
 			
 			rotCount += rotDir;
