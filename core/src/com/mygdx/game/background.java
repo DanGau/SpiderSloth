@@ -71,7 +71,7 @@ public class background implements ApplicationListener {
     
     private void update()
 	{
-		stateTime += Gdx.graphics.getDeltaTime();           // #15
+		stateTime = Gdx.graphics.getDeltaTime();           // #15
 		
 		if(!paused)
         {	
@@ -81,8 +81,8 @@ public class background implements ApplicationListener {
         	if(back2.getX() <= back2.getWidth() * -1)
         		back2.setPosition(back1.getX() + back1.getWidth(), 0);
         	
-			back1.setPosition(back1.getX() - stateTime, 0);
-			back2.setPosition(back2.getX() - stateTime, 0);
+			back1.setPosition(back1.getX() - stateTime * 100, 0);
+			back2.setPosition(back2.getX() - stateTime * 100, 0);
         }
 	}
 }
