@@ -21,7 +21,7 @@ public class background implements ApplicationListener {
 
     public void create () {
     	
-    	img = new Texture(Gdx.files.internal("back.png"));
+    	img = new Texture(("back.png"));
     	
         spriteBatch = new SpriteBatch();
         

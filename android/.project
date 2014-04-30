@@ -31,4 +31,17 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>assets</name>
+			<type>2</type>
+			<locationURI>CoreAssets</locationURI>
+		</link>
+	</linkedResources>
+	<variableList>
+		<variable>
+			<name>CoreAssets</name>
+			<value>file:/E:/SpiderSloth/core/assets</value>
+		</variable>
+	</variableList>
 </projectDescription>
