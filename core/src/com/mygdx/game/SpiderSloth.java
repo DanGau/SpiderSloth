@@ -11,8 +11,8 @@ public class SpiderSloth extends ApplicationAdapter {
 	Texture img;
 	AnimatedSloth as;
 	AnimatedSloth as2;
-	background bg;
-	drawingRope dr;
+	Background bg;
+	DrawingRope dr;
 	
 	@Override
 	public void create () {
@@ -24,7 +24,7 @@ public class SpiderSloth extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture(Gdx.files.internal("badlogic.jpg"));
 		
-		bg = new background();
+		bg = new Background();
 		bg.create();
 		
 		as = new AnimatedSloth();
@@ -35,7 +35,7 @@ public class SpiderSloth extends ApplicationAdapter {
 		as2.create();
 		as2.setPos(50, 0);
 		
-		dr = new drawingRope();
+		dr = new DrawingRope();
 		dr.create();
 		
 	}

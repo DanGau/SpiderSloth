@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class drawingRope implements ApplicationListener {
+public class DrawingRope implements ApplicationListener {
 	
     private SpriteBatch spriteBatch;
     private Texture img;

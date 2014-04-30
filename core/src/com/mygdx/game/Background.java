@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class background implements ApplicationListener {
+public class Background implements ApplicationListener {
 	
     private SpriteBatch spriteBatch;
     private Texture img;
