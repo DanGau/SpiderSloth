@@ -35,7 +35,7 @@
 		<link>
 			<name>assets</name>
 			<type>2</type>
-			<location>e:/spidersloth/android/assets</location>
+			<locationURI>CoreAssets</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

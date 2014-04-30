@@ -26,7 +26,7 @@ public class drawingRope implements ApplicationListener {
 
     public void create () {
     	
-    	img = new Texture(Gdx.files.internal("rope_segment.png"));
+    	img = new Texture(("rope_segment.png"));
     	
         spriteBatch = new SpriteBatch();
         
