@@ -1,13 +1,15 @@
 package com.mygdx.game;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.AssetControl.AssetHandler;
 
 public class AnimatedSloth implements ApplicationListener{
 	
@@ -32,7 +34,10 @@ public class AnimatedSloth implements ApplicationListener{
 
     @Override
     public void create() {
-        walkSheet = new Texture(Gdx.files.internal("sprite-sheet.png")); // #9
+    	
+    	HashMap<String, Texture> textureSet = AssetHandler.loadTextures("player_sprites");
+    	
+        walkSheet = textureSet.get("sprite-sheet"); // #9
         TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);              // #10
         walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;

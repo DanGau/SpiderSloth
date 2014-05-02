@@ -1,11 +1,14 @@
 package com.mygdx.game;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.AssetControl.AssetHandler;
 
 public class DrawingRope implements ApplicationListener {
 	
@@ -26,7 +29,9 @@ public class DrawingRope implements ApplicationListener {
 
     public void create () {
     	
-    	img = new Texture(Gdx.files.internal("rope_segment2.png"));
+    	HashMap<String, Texture> textureSet = AssetHandler.loadTextures("rope_sprites");
+    	
+    	img = textureSet.get("rope_segment2");
     	
         spriteBatch = new SpriteBatch();
         

@@ -1,11 +1,14 @@
 package com.mygdx.game;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.AssetControl.AssetHandler;
 
 public class Background implements ApplicationListener {
 	
@@ -21,13 +24,13 @@ public class Background implements ApplicationListener {
 
     public void create () {
     	
-    	img = new Texture(Gdx.files.internal("back.png"));
+    	HashMap<String, Texture> textureSet = AssetHandler.loadTextures("background");
     	
         spriteBatch = new SpriteBatch();
         
         //img = new Texture("back.png");
-        back1 = new Sprite(img);
-        back2 = new Sprite(img);
+        back1 = new Sprite(textureSet.get("back2"));
+        back2 = new Sprite(textureSet.get("back2"));
         
         resize(0,0);
         
