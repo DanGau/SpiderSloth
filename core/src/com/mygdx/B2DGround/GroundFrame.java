@@ -5,8 +5,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.mygdx.Game.Play;
 import com.mygdx.GlobalVars.GlobalVars;
-import com.mygdx.game.Play;
+import com.mygdx.GlobalVars.GlobalVars.BodyClass;
 
 public class GroundFrame 
 {
@@ -21,6 +22,8 @@ public class GroundFrame
 		bdef.type = BodyType.StaticBody;
 		
 		body = Play.getWorld().createBody(bdef);
+		
+		body.setUserData(BodyClass.WORLD);
 		
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(GlobalVars.V_WIDTH, 5 / GlobalVars.PPM);
@@ -38,6 +41,7 @@ public class GroundFrame
 		bdef.type = BodyType.StaticBody;
 		
 		body = Play.getWorld().createBody(bdef);
+		body.setUserData(BodyClass.WORLD);		
 		
 		shape = new PolygonShape();
 		shape.setAsBox(GlobalVars.V_WIDTH, 5 / GlobalVars.PPM);
@@ -47,7 +51,8 @@ public class GroundFrame
 		fdef.filter.categoryBits = GlobalVars.CATEGORY_GROUND;
 		fdef.filter.maskBits = GlobalVars.MASK_GROUND;
 		
-		body.createFixture(fdef);
+		
+		body.createFixture(fdef).setUserData(BodyClass.WORLD);
 		
 		return body;
 	}

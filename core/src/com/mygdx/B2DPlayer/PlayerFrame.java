@@ -5,8 +5,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.mygdx.Game.Play;
 import com.mygdx.GlobalVars.GlobalVars;
-import com.mygdx.game.Play;
+import com.mygdx.GlobalVars.GlobalVars.BodyClass;
 
 public class PlayerFrame
 {
@@ -19,15 +20,16 @@ public class PlayerFrame
 		bdef.position.set(x, y);
 		bdef.type = BodyType.DynamicBody;
 		body = Play.getWorld().createBody(bdef);
+		body.setUserData(BodyClass.PLAYER);
 		
 		PolygonShape shape2 = new PolygonShape();
 		shape2.setAsBox(20 / GlobalVars.PPM, 20 / GlobalVars.PPM);
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape2;
-		fdef.density = 10f * GlobalVars.PPM;
+		fdef.density = 15f * GlobalVars.PPM;
 		fdef.filter.categoryBits = GlobalVars.CATEGORY_PLAYER;
 		fdef.filter.maskBits = GlobalVars.MASK_PLAYER;
-		body.createFixture(fdef);
+		body.createFixture(fdef).setUserData(BodyClass.PLAYER);
 		
 		return body;
 	}

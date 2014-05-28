@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.Game;
 
 import java.util.ArrayList;
 
@@ -19,6 +19,8 @@ import com.mygdx.B2DGround.GroundFrame;
 import com.mygdx.B2DPlayer.PlayerFrame;
 import com.mygdx.B2DRope.RopeFrame;
 import com.mygdx.GlobalVars.GlobalVars;
+import com.mygdx.Handlers.ContactHandler;
+import com.mygdx.Handlers.JointHandler;
 
 public class Play extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -37,6 +39,8 @@ public class Play extends ApplicationAdapter {
 	private OrthographicCamera hudCam;
 	private OrthographicCamera b2dCam;
 	
+	private ContactHandler ch;
+	
 	private static World world;
 	private Box2DDebugRenderer b2dr;
 	
@@ -45,6 +49,7 @@ public class Play extends ApplicationAdapter {
 	Body[] rope;
 	RevoluteJoint[] rjRope;
 	static WeldJoint endJoint;
+	boolean inputActive = false;
 	
 	static int curSeg = 0;
 	
@@ -62,8 +67,11 @@ public class Play extends ApplicationAdapter {
 		hudCam = new OrthographicCamera();
 		hudCam.setToOrtho(false, GlobalVars.V_WIDTH, GlobalVars.V_HEIGHT);
 		
+		ch = new ContactHandler();
+		
 		world = new World(new Vector2(0, -9.81f), false);
 		b2dr = new Box2DDebugRenderer();
+		world.setContactListener(ch);
 		
 		//Box to represent player
 		player = PlayerFrame.create(GlobalVars.V_WIDTH / 2 / GlobalVars.PPM, GlobalVars.V_HEIGHT / 2 / GlobalVars.PPM);
@@ -74,22 +82,12 @@ public class Play extends ApplicationAdapter {
 		System.out.println(player.getPosition().x + " " + player.getPosition().y);
 		
 		ropes = new ArrayList<RopeFrame>();
-		
-		//Create Rope
-		newRope(player, body);
-		
-		
-		
+				
 		
 		//Configure Camera
 		b2dCam = new OrthographicCamera();
 		b2dCam.setToOrtho(false, GlobalVars.V_WIDTH / GlobalVars.PPM, GlobalVars.V_HEIGHT / GlobalVars.PPM);
 		
-		
-		
-		
-		//world.destroyJoint(endJoint);
-		//endJoint = null;
 		
 		batch = new SpriteBatch();
 		img = new Texture(Gdx.files.internal("badlogic.jpg"));
@@ -139,16 +137,36 @@ public class Play extends ApplicationAdapter {
 				newRope(player, body);
 			}
 		}
-		if(Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched(2))
+		
+		if(Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched())
 		{
-			if(endJoint != null)
+			if(!inputActive && ch.isPlayerOnGround() )
+			{
+				player.applyForceToCenter(new Vector2(0, 100000), true);
+				inputActive = true;
+			}
+			
+			if(!inputActive && endJoint != null)
 			{
 				world.destroyJoint(endJoint);
 				endJoint = null;
+				inputActive = true;
 				
 				System.out.println(player.getLinearVelocity());
 			}
 			
+			if(!inputActive && endJoint == null)
+			{
+				newRope(player, body);
+				inputActive = true;
+			}
+			
+			
+			
+		}
+		else if(!Gdx.input.isKeyPressed(Keys.SPACE))
+		{
+			inputActive = false;
 		}
 		else
 		{
@@ -156,6 +174,9 @@ public class Play extends ApplicationAdapter {
 			bg.resume();
 			dr.resume();
 		}
+		
+		if(player.getLinearVelocity().x > 0)
+			player.applyForceToCenter(new Vector2(500, -500), true);
 		
 		bg.render();
 		//as.render();
@@ -191,7 +212,7 @@ public class Play extends ApplicationAdapter {
 	
 	public static void newRope(Body Box, Body body)
 	{
-		ropes.add(new RopeFrame(Box.getPosition().x, GlobalVars.V_HEIGHT * .9f / GlobalVars.PPM, Box.getPosition().x, Box.getPosition().y));
+		ropes.add(new RopeFrame(Box.getPosition().x, GlobalVars.V_HEIGHT * .9f / GlobalVars.PPM, Box.getPosition().x, Box.getPosition().y, (float) (Math.PI / 4)));
 		
 		System.out.println(ropes.get(curSeg).getRope() + " " + curSeg);
 		
@@ -203,7 +224,11 @@ public class Play extends ApplicationAdapter {
 			//Attach Rope and Box		
 			endJoint = (WeldJoint) world.createJoint(JointHandler.Box2Rope(Box, ropes.get(curSeg).getRope()[ropes.get(curSeg).getRopeLen() - 1]));
 			
+			Box.applyLinearImpulse(new Vector2(-300, -300), Box.getPosition(), true);
+			
 			curSeg++;
+			
+			System.out.println(curSeg);
 		}
 	}
 }

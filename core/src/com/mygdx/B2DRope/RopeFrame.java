@@ -8,8 +8,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.mygdx.Game.Play;
 import com.mygdx.GlobalVars.GlobalVars;
-import com.mygdx.game.Play;
+import com.mygdx.GlobalVars.GlobalVars.BodyClass;
 
 public class RopeFrame {
 		
@@ -19,20 +20,41 @@ public class RopeFrame {
 	
 	private static final float SEG_LEN = 4;
 	
-	public RopeFrame(float x1, float y1, float x2, float y2)
+	public RopeFrame(float x1, float y1, float x2, float y2, float angle)
 	{
-		rope = create(x1, y1, x2, y2);
+		rope = create(x1, y1, x2, y2, angle);
 	}
 	
-	public static Body[] create(float x1, float y1, float x2, float y2)
+	public static Body[] create(float x1, float y1, float x2, float y2, float angle2)
 	{
-		float ropeLen = (float) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
+		float ropeLen, ropeX;
+		
+		System.out.println("ys " + y2 + " " + y1 + " " + angle2 + " " + Math.sin(angle2));
+		
+		if(angle2 < .01 || angle2 > Math.PI)
+		{
+			ropeLen = Math.abs(y2);
+			ropeX = 0;
+		}
+		
+		else
+		{
+			ropeLen = (float) Math.abs(((y2 - y1) / Math.sin(angle2)));
+			
+			ropeX = (float) Math.sqrt((ropeLen) * (ropeLen) - (y2 - y1) * (y2 - y1));
+		}
+		
+		
+		System.out.println("ropex " + ropeX);
+		System.out.println("rope len " + ropeLen);
+		
+		System.out.println("rope len " + ropeLen);
 		
 		ropeSegs = (int)(ropeLen * GlobalVars.PPM / GlobalVars.SEG_HEIGHT / 2);
 		
 		System.out.println("segments " + ropeSegs);
 		
-		if(ropeSegs < 2)
+		if(ropeSegs < 2 || ropeSegs > 9)
 		{
 			System.out.println("i am null");
 			return null;
@@ -42,7 +64,7 @@ public class RopeFrame {
 		
 		float dy = (y2 - y1) / ropeSegs;
 		
-		float dx = (x2 - x1) / ropeSegs;
+		float dx = ropeX / ropeSegs;
 		
 		//System.out.println(ropeLen + " " + ropeSegs);
 		//System.out.println(x1 + " " + x2 + " " + dx);
@@ -59,8 +81,10 @@ public class RopeFrame {
 		fdef.shape = seg;
 		fdef.density = 10f * GlobalVars.PPM;
 		
-		float x = x1;
+		float x = x2 + ropeX;
 		float y = y1;
+		
+		System.out.println(angle2);
 		
 		for(int i = 0; i < ropeSegs; i++)
 		{
@@ -69,19 +93,20 @@ public class RopeFrame {
 			
 			rope[i] = Play.getWorld().createBody(bdef);
 			
-			float angle = (float)(Math.atan(dy / dx) * 180 / Math.PI);
-			//System.out.println(angle);
+			rope[i].setUserData(BodyClass.ROPE);
 			
-			//rope[i].setTransform(x, y, angle);
 			
-			//fdef.density = 10f / ropeSegs * GlobalVars.PPM;
+			rope[i].setTransform(x, y, (float) (angle2 - Math.PI / 2));
+
+			
+			fdef.density = 10f * GlobalVars.PPM;
 			fdef.restitution = 1f;
 			fdef.filter.categoryBits = GlobalVars.CATEGORY_ROPE;
 			fdef.filter.maskBits = GlobalVars.MASK_ROPE;
-			rope[i].createFixture(fdef);
+			rope[i].createFixture(fdef).setUserData(BodyClass.ROPE);
 			
 			y += dy;
-			x += dx;
+			x -= dx;
 		}
 		
 		RevoluteJointDef rjd = new RevoluteJointDef();
