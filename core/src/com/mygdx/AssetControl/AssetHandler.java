@@ -23,13 +23,13 @@ public class AssetHandler {
 			
 			FileHandle[] fileList = folder.list();
 			
-			System.out.println("size: " + fileList.length);
+			//System.out.println("size: " + fileList.length);
 			
 			for(int i = 0; i < fileList.length; i++)
 			{
 				String name = fileList[i].toString().substring(fileList[i].toString().lastIndexOf("/") + 1, fileList[i].toString().lastIndexOf("."));	
 				result.put(name, new Texture(fileList[i]));
-				System.out.println(name);
+				//System.out.println(name);
 			}
 			
 			return result;			
